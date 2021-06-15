@@ -88,7 +88,7 @@ def main(args):
     with open(os.path.join(data_folder, resolution, offsets_filename)) as json_file:
         offsets = json.load(json_file)
     frame_dur = int(1000 / fps)
-    #print(f'{int(frame_w)}x{int(frame_h)}, FPS: {fps:.2f}, DUR: {frame_dur:.2f}')
+    print(f'{int(frame_w)}x{int(frame_h)}, FPS: {fps:.2f}, DUR: {frame_dur:.2f}')
     scaled_w = int(frame_w * args.scale)
     scaled_h = int(frame_h * args.scale)
     first_rois_ltrb = [[int(args.scale * offsets['first_rois_ltrb'][i][j]) for j in range(4)] for i in range(len(offsets['first_rois_ltrb']))]
@@ -178,6 +178,7 @@ def main(args):
     df = df.append(df.sum().rename('-- Total --'))
     writer = pd.ExcelWriter(args.output_filename)
     df.to_excel(writer, index_label='Nickname', sheet_name=output_sheet_name)
+    print(writer.__dict__)
     writer.sheets[output_sheet_name].set_column('A:G', 15)
     workbook = writer.book
     worksheet = writer.sheets[output_sheet_name]
